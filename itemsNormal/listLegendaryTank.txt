@@ -1,0 +1,23 @@
+"Abyssal Mask",
+"Anathema's Chains",
+"Dead Man's Plate",
+"Force of Nature",
+"Frozen Heart"
+"Gargoyle Stoneplate",
+"Hullbreaker",
+"Knight's Vow",
+"Randuin's Omen",
+"Redemption",
+"Silvermere Dawn",
+"Spirit Visage",
+"Sterak's Gage",
+"Sunfire Aegis",
+"Thornmail",
+"Titanic Hydra",
+"Turbo Chemtank",
+"Vigilant Wardstone",
+"Warmog's Armor",
+"Winter's Approach",
+"Zeke's Convergence",
+"Zephyr"
+
