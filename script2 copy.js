@@ -87,6 +87,8 @@ function randomizar() {
       const buildElement2 = document.getElementById("item-lendario-1");
       buildElement2.style.backgroundImage = `url('https://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${itemLendario1Final.image.full}')`;
     }
+
+    //Ap
     if (item.description.includes("Ability Power")) {
       const legendaryApItemNames = [
         "Archangel's Staff",
@@ -116,13 +118,20 @@ function randomizar() {
         legendaryApItemNames.includes(item.name)
       );
 
-      const buildIndex3 = Math.floor(Math.random() * itemLendario2.length);
-      const itemLendario2Final = itemLendario2[buildIndex3];
+      console.log(itemLendario2);
 
-      const buildElement3 = document.getElementById("item-lendario-1");
-      buildElement3.style.backgroundImage = `url('https://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${itemLendario2Final.image.full}')`;
+      const generated = new Map();
+
+      function gerarNovoIndice(max = 10) {
+        const newId = Math.floor(Math.random() * max);
+
+        if (generated.get(newId)) {
+          return gerarNovoIndice(max);
+        }
+      }
     }
 
+    // Vida
     if (item.description.includes("Health", "Armor", "Magic Resist")) {
       const legendaryTankItemNames = [
         "Abyssal Mask",
@@ -153,11 +162,43 @@ function randomizar() {
         legendaryTankItemNames.includes(item.name)
       );
 
-      const buildIndex4 = Math.floor(Math.random() * itemLendario3.length);
-      const itemLendario3Final = itemLendario3[buildIndex4];
+      /** Cria uma "tabela" para lembrar os itens já gerados */
+      const generated = new Map();
 
-      const buildElement4 = document.getElementById("item-lendario-1");
-      buildElement4.style.backgroundImage = `url('https://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${itemLendario3Final.image.full}')`;
+      /** Gera um novo id randômico entre 0 e max. */
+      function gerarNovoIndice(max = 10) {
+        const newId = Math.floor(Math.random() * max);
+        /** Verifica se o item gerado já existe na tabela */
+        if (generated.get(newId)) {
+          /**
+        Se o item gerado for duplicado, tenta gerar um novo.
+        Faz isso recursivamente até gerar um item ainda não gerado.
+        Isso é chamado de função recursiva.
+        */
+          return gerarNovoIndice(max);
+        }
+        /**
+         * Se não existir, inclui na tabela e retorna como um item válido.
+         * Não preciso utilizar "else" pois o "return" dentro do "if"
+         * já interrompe o fluxo.
+         */
+        generated.set(newId, newId);
+        return newId;
+      }
+
+      /**
+        Executa o processo 4 vezes (de 0 a 3)
+        Como o nome dos elemtos html segue uma sequência, nós geramos o nome do item utilizando o índice,
+        mas como o índice começa em 0 e os elemtnso em 1 (item-lendario-1), sempre acresnetamos 1 ao índice
+        ao fazer a concatenação `item-lendario-${index + 1}`. Também poderia ser "item-lendario-" + index + 1.
+        Uma string entre "backticks", dessa forma: `alguma_coisa` é conhecido como Template Literals.
+    */
+      for (let index = 0; index < 4; index++) {
+        const item =
+          itemLendario3[gerarNovoIndice(legendaryTankItemNames.length)];
+        const el = document.getElementById(`item-lendario-${index + 1}`);
+        el.style.backgroundImage = `url('https://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${item.image.full}')`;
+      }
     }
   });
 }
