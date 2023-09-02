@@ -17,6 +17,13 @@ async function obterDadosItens() {
 }
 
 function randomizar() {
+  for (let index = 0; index < 4; index++) {
+    const elSecond = document.getElementById(`item-lendario-${index + 1}`);
+    const elResto = document.getElementById(`item-mitico`, `bota`);
+    elSecond.style.backgroundImage = "none";
+    elResto.style.backgroundImage = "none";
+  }
+
   obterDadosCampeoes().then((campeoes) => {
     const campeaoIndex = Math.floor(Math.random() * campeoes.length);
     const campeao = campeoes[campeaoIndex];
@@ -114,25 +121,80 @@ function randomizar() {
       const itensAdFiltrados = itensLendarios.filter((itemAd) =>
         itemAd.tipo.includes("ad")
       );
-      console.log(itensAdFiltrados);
+      const itemLendario = itens.filter((item) =>
+        itensAdFiltrados.some((itemAd) => itemAd.nome === item.name)
+      );
+      const generated = new Map();
+
+      function gerarNovoIndice(max = 10) {
+        const newId = Math.floor(Math.random() * max);
+        if (generated.get(newId)) {
+          return gerarNovoIndice(max);
+        }
+        generated.set(newId, newId);
+        return newId;
+      }
+
+      for (let index = 0; index < 4; index++) {
+        const itemLF = itemLendario[gerarNovoIndice(itensAdFiltrados.length)];
+        const el = document.getElementById(`item-lendario-${index + 1}`);
+        el.style.backgroundImage = `url('https://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${itemLF.image.full}')`;
+      }
     }
 
     if (item.description.includes("Ability Power")) {
       const itensApFiltrados = itensLendarios.filter((itemAp) =>
         itemAp.tipo.includes("ap")
       );
-      console.log(itensApFiltrados);
+
+      const itemLendario = itens.filter((item) =>
+        itensApFiltrados.some((itemAp) => itemAp.nome === item.name)
+      );
+      const generated = new Map();
+
+      function gerarNovoIndice(max = 10) {
+        const newId = Math.floor(Math.random() * max);
+        if (generated.get(newId)) {
+          return gerarNovoIndice(max);
+        }
+        generated.set(newId, newId);
+        return newId;
+      }
+
+      for (let index = 0; index < 4; index++) {
+        const itemLF = itemLendario[gerarNovoIndice(itensApFiltrados.length)];
+        const el = document.getElementById(`item-lendario-${index + 1}`);
+        el.style.backgroundImage = `url('https://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${itemLF.image.full}')`;
+      }
     }
 
     if (
-      item.description.includes(
-        "Base Health Regen" || "Magic Resist" || "Armor"
-      )
+      item.description.includes("Base Health Regen") ||
+      item.description.includes("Armor")
     ) {
       const itensTankFiltrados = itensLendarios.filter((itemTank) =>
         itemTank.tipo.includes("tank")
       );
-      console.log(itensTankFiltrados);
+
+      const itemLendario = itens.filter((item) =>
+        itensTankFiltrados.some((itemAp) => itemAp.nome === item.name)
+      );
+      const generated = new Map();
+
+      function gerarNovoIndice(max = 10) {
+        const newId = Math.floor(Math.random() * max);
+        if (generated.get(newId)) {
+          return gerarNovoIndice(max);
+        }
+        generated.set(newId, newId);
+        return newId;
+      }
+
+      for (let index = 0; index < 4; index++) {
+        const itemLF = itemLendario[gerarNovoIndice(itensTankFiltrados.length)];
+        const el = document.getElementById(`item-lendario-${index + 1}`);
+        el.style.backgroundImage = `url('https://ddragon.leagueoflegends.com/cdn/13.13.1/img/item/${itemLF.image.full}')`;
+      }
     }
   });
 }
